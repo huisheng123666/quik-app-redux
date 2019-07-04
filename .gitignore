@@ -1,0 +1,17 @@
+.DS_Store
+node_modules/
+build/
+dist/
+dev_utils/hap-tools/client.json
+dev_utils/hap-tools/debugger/client/html/inspector/
+npm-debug.log*
+yarn-debug.log*
+yarn-error.log*
+package-lock.json
+# Editor directories and files
+.idea
+*.suo
+*.ntvs*
+*.njsproj
+*.sln
+.vscode/launch.json
