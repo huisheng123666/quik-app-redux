@@ -3,17 +3,19 @@
   <div class="demo-page">
     <text class="title">{{text}}</text>
     <text>{{a}}</text>
+    <text>{{b}}</text>
     <input class="btn" type="button" value="increase" onclick="increase" />
   </div>
 </template>
 
 <script>
 import { connect } from '../Common/js/redux'
+import { changeB } from './store/actionCreator'
 
 export default connect(
-  function mapStateToData ({ a }) {
-    return { a }
-  },
+  ({ home: {a}, detail: {b} }) => {
+    return { a, b }
+  }
 )({
   private: {
     text: '欢迎打开详情页'
@@ -25,8 +27,9 @@ export default connect(
   onMenuPress() {
     this.$app.$def.showMenu()
   },
-  increase () {
-    this.dispatch({ type: 'INCREASE_A' })
+  increase: function () {
+    this.dispatch({type: 'INCREASE_A'})
+    this.dispatch(changeB(this.a + 10))
   }
 })
 </script>

@@ -3,7 +3,7 @@
 <template>
   <!-- template里只能有一个根节点 -->
   <div class="demo-page">
-    <text class="title" if="{{a}}">欢迎打开{{a}}</text>
+    <text class="title" if="{{a}}">欢迎打开{{b}}</text>
     <!-- 点击跳转详情页 -->
     <input class="btn" type="button" value="跳转到详情页" onclick="routeDetail" />
     <input class="btn" type="button" value="picker" onclick="showPicker" />
@@ -24,8 +24,8 @@ import { connect } from '../Common/js/redux'
 import data from './config'
 
 export default connect(
-  function mapStateToData ({ a }) {
-    return { a }
+  ({ detail: {b}, home: {a} }) => {
+    return { b, a }
   },
 )(
   {
@@ -142,7 +142,7 @@ export default connect(
       console.log(index, item)
     },
     increase () {
-      this.dispatch({ type: 'INCREASE_A' })
+      this.dispatch({ type: 'CHANGE_B', b: 10 })
     }
   }
 )
