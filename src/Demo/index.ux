@@ -1,0 +1,172 @@
+<import name="x-picker" src="../components/picker-view"></import>
+
+<template>
+  <!-- template里只能有一个根节点 -->
+  <div class="demo-page">
+    <text class="title" if="{{a}}">欢迎打开{{a}}</text>
+    <!-- 点击跳转详情页 -->
+    <input class="btn" type="button" value="跳转到详情页" onclick="routeDetail" />
+    <input class="btn" type="button" value="picker" onclick="showPicker" />
+    <input class="btn" type="button" value="increase" onclick="increase" />
+    <x-picker if="{{showPic}}"
+              range="{{range}}"
+              current-res="{{current}}"
+              @hide-picker="hidePicker"
+              @column-change="columnChange"
+              @change="changeAdd"
+              label-key="{{key}}"></x-picker>
+  </div>
+</template>
+
+<script>
+import router from '@system.router'
+import { connect } from '../Common/js/redux'
+import data from './config'
+
+export default connect(
+  function mapStateToData ({ a }) {
+    return { a }
+  },
+)(
+  {
+    // 页面级组件的数据模型，影响传入数据的覆盖机制：private内定义的属性不允许被覆盖
+    private: {
+      title: '示例页面',
+      showPic: false,
+      range: [
+        data,
+        [
+          {
+            "name": "北京市",
+            "value": "3515"
+          },
+          {
+            "name": "天津市",
+            "value": "3533"
+          },
+          {
+            "name": "河北省",
+            "value": "3551"
+          },
+          {
+            "name": "山西省",
+            "value": "3746"
+          },
+          {
+            "name": "内蒙古自治区",
+            "value": "3888"
+          },
+          {
+            "name": "辽宁省",
+            "value": "4012"
+          },
+          {
+            "name": "吉林省",
+            "value": "4141"
+          },
+        ],
+        [
+          {
+            "name": "北京市",
+            "value": "3515"
+          },
+          {
+            "name": "天津市",
+            "value": "3533"
+          },
+          {
+            "name": "河北省",
+            "value": "3551"
+          },
+          {
+            "name": "山西省",
+            "value": "3746"
+          },
+          {
+            "name": "内蒙古自治区",
+            "value": "3888"
+          },
+          {
+            "name": "辽宁省",
+            "value": "4012"
+          },
+          {
+            "name": "吉林省",
+            "value": "4141"
+          },
+        ]
+      ],
+      current: [
+        {
+          "name": "山西省",
+          "value": "3746"
+        },
+        {
+          "name": "山西省",
+          "value": "3746"
+        },
+        {
+          "name": "山西省",
+          "value": "3746"
+        },
+      ]
+    },
+    public: {
+      key: 'name'
+    },
+    onInit () {
+      this.$on('hidePicker', () => {
+        this.showPic = false
+      })
+    },
+    routeDetail () {
+      // 跳转到应用内的某个页面，router用法详见：文档->接口->页面路由
+      router.push ({
+        uri: '/DemoDetail'
+      })
+    },
+    showPicker () {
+      this.showPic = true
+    },
+    hidePicker () {
+      console.log(123)
+      this.showPic = false
+    },
+    changeAdd (e) {
+      console.log('confirm')
+      this.showPic = false
+      this.current = e.detail.res
+    },
+    columnChange({detail: {index, item}}) {
+      // 这里处理源数据
+      console.log(index, item)
+    },
+    increase () {
+      this.dispatch({ type: 'INCREASE_A' })
+    }
+  }
+)
+</script>
+
+<style>
+  .demo-page {
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
+  }
+
+  .title {
+    font-size: 40px;
+    text-align: center;
+  }
+
+  .btn {
+    width: 550px;
+    height: 86px;
+    margin-top: 75px;
+    border-radius: 43px;
+    background-color: #09ba07;
+    font-size: 30px;
+    color: #ffffff;
+  }
+</style>

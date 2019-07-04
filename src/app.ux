@@ -1,0 +1,23 @@
+<script>
+/**
+* 应用级别的配置，供所有页面公用
+*/
+import util from './util'
+import { connectApp } from './Common/js/redux'
+import { createStore } from 'redux'
+
+const store = createStore(function reducer (state = { a: 0, b: 1 }, action){
+  switch (action.type) {
+    case 'INCREASE_A':
+      return { ...state, a: state.a + 1 }
+      break;
+    default:
+      return state
+  }
+})
+
+export default connectApp(store, {
+  showMenu: util.showMenu,
+  createShortcut: util.createShortcut
+})
+</script>
